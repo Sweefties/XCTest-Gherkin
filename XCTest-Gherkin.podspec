@@ -7,7 +7,7 @@
 #
 
 Pod::Spec.new do |s|
-  s.name             = "XCTest-Gherkin-alpha-beta"
+  s.name             = "XCTest-Gherkin"
   s.version          = "0.99.999"
   s.summary          = "Gherkin style tests"
   s.description      = <<-DESC

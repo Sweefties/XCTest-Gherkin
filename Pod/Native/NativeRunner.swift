@@ -12,10 +12,14 @@ import XCTest
 //Gives us the ability to run features or scenarios directly by specifying file and name
 open class NativeRunner {
     
-    public class func runScenario(featureFile: String, scenario: String?, testCase: XCTestCase) {
+    public class func runScenario(featureFile: String,
+                                      scenario: String?,
+                                      testCase: XCTestCase,
+                                      bundle: Bundle? = nil) {
         testCase.state.loadAllStepsIfNeeded()
+        let bundle = bundle ??  Bundle(for: type(of: testCase))
 
-        let path = Bundle(for: type(of: testCase)).resourceURL?.appendingPathComponent(featureFile)
+        let path = bundle.resourceURL?.appendingPathComponent(featureFile)
         let featureFilePath = requireNotNil(path, "Path could not be built for feature file: \(featureFile)")
 
         let features = loadFeatures(path: featureFilePath)
@@ -33,8 +37,13 @@ open class NativeRunner {
         }
     }
     
-    public class func runFeature(featureFile: String, testCase: XCTestCase) {
-        NativeRunner.runScenario(featureFile: featureFile, scenario: nil, testCase: testCase)
+    public class func runFeature(featureFile: String,
+                                     testCase: XCTestCase,
+                                 bundle: Bundle? = nil) {
+        NativeRunner.runScenario(featureFile: featureFile,
+                                 scenario: nil,
+                                 testCase: testCase,
+                                 bundle: bundle)
     }
     
     private class func loadFeatures(path: URL) -> [NativeFeature] {
